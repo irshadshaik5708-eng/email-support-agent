@@ -25,4 +25,21 @@ export const users = mysqlTable("users", {
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 
-// TODO: Add your tables here
+export const emailReviews = mysqlTable("emailReviews", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").references(() => users.id),
+  subject: varchar("subject", { length: 255 }),
+  emailText: text("emailText").notNull(),
+  category: varchar("category", { length: 64 }).notNull(),
+  sentiment: varchar("sentiment", { length: 32 }).notNull(),
+  urgency: varchar("urgency", { length: 32 }).notNull(),
+  confidence: int("confidence").notNull(),
+  draftText: text("draftText").notNull(),
+  knowledgeContext: text("knowledgeContext").notNull(),
+  status: mysqlEnum("status", ["in_review", "approved", "rejected", "escalated", "sent_simulated"]).default("in_review").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type EmailReview = typeof emailReviews.$inferSelect;
+export type InsertEmailReview = typeof emailReviews.$inferInsert;

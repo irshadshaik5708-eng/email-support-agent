@@ -1,6 +1,6 @@
-import { eq } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
+import { EmailReview, InsertEmailReview, InsertUser, emailReviews, users } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -89,4 +89,23 @@ export async function getUserByOpenId(openId: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-// TODO: add feature queries here as your schema grows.
+export async function createEmailReview(review: InsertEmailReview) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(emailReviews).values(review);
+  return Number((result as any).insertId);
+}
+
+export async function listEmailReviewsByUser(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(emailReviews).where(eq(emailReviews.userId, userId)).orderBy(desc(emailReviews.createdAt));
+}
+
+export async function updateEmailReviewStatus(id: number, userId: number, status: EmailReview["status"], draftText?: string) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const values: Partial<InsertEmailReview> = { status, updatedAt: new Date() };
+  if (draftText !== undefined) values.draftText = draftText;
+  return db.update(emailReviews).set(values).where(and(eq(emailReviews.id, id), eq(emailReviews.userId, userId)));
+}

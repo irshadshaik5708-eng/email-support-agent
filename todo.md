@@ -1,0 +1,21 @@
+# Project TODO
+
+- [x] Public landing page with exact “Try the demo” call to action
+- [x] Interactive support-email workspace for pasted customer emails
+- [x] Structured intent, sentiment, urgency, and confidence analysis
+- [x] Policy-aware draft generation with relevant knowledge context
+- [x] Editable professional response draft
+- [x] Human-review controls: Approve, Reject, and Escalate
+- [x] Clearly labeled simulated sending; no real email delivery in public demo
+- [x] Protected signed-in review history with analyses, final status, and timestamps
+- [x] Database schema and procedures for saved review history
+- [x] Responsive and accessible UI with keyboard-friendly controls
+- [x] Realistic sample emails
+- [x] Loading, empty, and error states
+- [x] Responsive visual polish and internship-ready presentation
+- [x] Unit tests for analysis, approval boundary, and history procedures
+- [x] Browser screenshot verification on desktop and mobile
+- [x] Final publish-ready checkpoint
+- [x] Add unit tests for successful email analysis output, decision/status update flows, and signed-in review history persistence
+- [x] Capture and review at least one mobile screenshot in addition to the desktop screenshot
+- [x] Save a final webdev checkpoint after verification and before delivery
